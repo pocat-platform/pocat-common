@@ -1,0 +1,17 @@
+rootProject.name = 'resources'
+
+include 'pocat-resource-api'
+include 'pocat-resource-mongodb'
+
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}

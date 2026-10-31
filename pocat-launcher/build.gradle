@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+}
+
+group = 'io.pocat'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}
+
+jar {
+    archiveFileName = 'pocat-launcher.jar'
+
+    manifest {
+        attributes(
+                'Main-Class': 'io.pocat.platform.PlatformLauncher'
+        )
+    }
+}
+
+def pocatHome = providers.gradleProperty('io.pocat.home')
+        .map { file(it) }
+        .orElse(file('../pocat'))
+
+tasks.register('installLauncher', Copy) {
+    dependsOn tasks.jar
+
+    from(jar.archiveFile)
+    from('src/main/scripts')
+    into pocatHome.map { new File(it, 'bin') }
+
+    doLast {
+        file('${pocatHome}/bin/pocat.sh').setExecutable(true)
+    }
+}
+
+tasks.build {
+    finalizedBy tasks.installLauncher
+}

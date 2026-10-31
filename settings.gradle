@@ -1,0 +1,11 @@
+rootProject.name = 'pocat'
+
+include 'pocat-launcher'
+include 'pocat-resource-api'
+include 'pocat-resource-mongodb'
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}
